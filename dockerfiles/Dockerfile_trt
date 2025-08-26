@@ -15,6 +15,7 @@ RUN apt-get update &&\
             ffmpeg &&\
     rm -rf /var/lib/apt/lists/*
 
+RUN $PIP_INSTALL "numpy==2.*" "pybind11>=2.12"
 COPY requirements.txt .
 RUN $PIP_INSTALL -r requirements.txt
 # GPU specific packages

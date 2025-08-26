@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+# set -e
 echo Preparing models...
 python -m if_rest.prepare_models
 
