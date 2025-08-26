@@ -177,7 +177,7 @@ class DetectorInfer(AbstractDetectorInfer):
         self.model_version = model_version
         self.url = triton_uri
         self.input_shape = (1, 3, 640, 640)
-        self.input_dtype = np.float32
+        self.input_dtype = float
         self.output_order = output_order
         self.triton_client = grpcclient.InferenceServerClient(url=triton_uri)
 

@@ -261,7 +261,7 @@ class SCRFD(AbstractDetector):
             height = input_height // stride
             width = input_width // stride
 
-            anchor_centers = np.stack(np.mgrid[:height, :width][::-1], axis=-1).astype(np.float32)
+            anchor_centers = np.stack(np.mgrid[:height, :width][::-1], axis=-1).astype(float)
             anchor_centers = (anchor_centers * stride).reshape((-1, 2))
             if num_anchors > 1:
                 anchor_centers = np.stack([anchor_centers] * num_anchors, axis=1).reshape((-1, 2))

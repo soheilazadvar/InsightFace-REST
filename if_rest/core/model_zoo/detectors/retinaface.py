@@ -81,7 +81,7 @@ def anchors_plane(height, width, stride, base_anchors):
     all_anchors: (height, width, A, 4) ndarray of anchors spreading over the plane
     """
     A = base_anchors.shape[0]
-    all_anchors = np.zeros((height, width, A, 4), dtype=np.float32)
+    all_anchors = np.zeros((height, width, A, 4), dtype=float)
     for iw in range(width):
         sw = iw * stride
         for ih in range(height):
@@ -161,7 +161,7 @@ def bbox_pred(boxes, box_deltas):
     if boxes.shape[0] == 0:
         return np.zeros((0, box_deltas.shape[1]))
 
-    boxes = boxes.astype(np.float, copy=False)
+    boxes = boxes.astype(float, copy=False)
     widths = boxes[:, 2] - boxes[:, 0] + 1.0
     heights = boxes[:, 3] - boxes[:, 1] + 1.0
     ctr_x = boxes[:, 0] + 0.5 * (widths - 1.0)
@@ -196,7 +196,7 @@ def bbox_pred(boxes, box_deltas):
 def landmark_pred(boxes, landmark_deltas):
     if boxes.shape[0] == 0:
         return np.zeros((0, landmark_deltas.shape[1]))
-    boxes = boxes.astype(np.float, copy=False)
+    boxes = boxes.astype(float, copy=False)
     widths = boxes[:, 2] - boxes[:, 0] + 1.0
     heights = boxes[:, 3] - boxes[:, 1] + 1.0
     ctr_x = boxes[:, 0] + 0.5 * (widths - 1.0)
@@ -247,7 +247,7 @@ class RetinaFace(AbstractDetector):
 
         self._anchors_fpn = dict(zip(self.fpn_keys, generate_anchors_fpn(cfg=self.anchor_cfg)))
         for k in self._anchors_fpn:
-            v = self._anchors_fpn[k].astype(np.float32)
+            v = self._anchors_fpn[k].astype(float)
             self._anchors_fpn[k] = v
         self.anchor_plane_cache = {}
 
@@ -263,7 +263,7 @@ class RetinaFace(AbstractDetector):
         for im in imgs:
             im = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
             im = np.transpose(im, (2, 0, 1))
-            input_blob = np.expand_dims(im, axis=0).astype(np.float32)
+            input_blob = np.expand_dims(im, axis=0).astype(float)
             t0 = time.time()
             net_out = self.model.run(input_blob)
             t1 = time.time()
@@ -363,13 +363,13 @@ class RetinaFace(AbstractDetector):
 
         if self.use_landmarks:
             landmarks = np.vstack(landmarks_list)
-            landmarks = landmarks[order].astype(np.float32, copy=False)
+            landmarks = landmarks[order].astype(float, copy=False)
         if self.masks:
             mask_scores = np.vstack(mask_scores_list)
             mask_scores = mask_scores[order]
-            pre_det = np.hstack((proposals[:, 0:4], scores, mask_scores)).astype(np.float32, copy=False)
+            pre_det = np.hstack((proposals[:, 0:4], scores, mask_scores)).astype(float, copy=False)
         else:
-            pre_det = np.hstack((proposals[:, 0:4], scores)).astype(np.float32, copy=False)
+            pre_det = np.hstack((proposals[:, 0:4], scores)).astype(float, copy=False)
         keep = nms(pre_det, thresh=self.nms_threshold)
         det = np.hstack((pre_det, proposals[:, 4:]))
         det = det[keep, :]

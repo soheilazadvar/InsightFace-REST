@@ -111,7 +111,7 @@ class Arcface(AbstractArcFace):
         if self.input_shape[0] == -1:
             self.input_shape = (1,) + self.input_shape[1:]
 
-        self.rec_model.run(np.zeros(self.input_shape, np.float32))
+        self.rec_model.run(np.zeros(self.input_shape, float))
         logger.info(
             f"Engine warmup complete! Expecting input shape: {self.input_shape}. Max batch size: {self.max_batch_size}")
 
@@ -171,7 +171,7 @@ class FaceGenderage(AbstractFaceGenderAge):
         if self.input_shape[0] == -1:
             self.input_shape = (1,) + self.input_shape[1:]
 
-        self.rec_model.run(np.zeros(self.input_shape, np.float32))
+        self.rec_model.run(np.zeros(self.input_shape, float))
         logger.info(
             f"Engine warmup complete! Expecting input shape: {self.input_shape}. Max batch size: {self.max_batch_size}")
 
@@ -243,7 +243,7 @@ class MaskDetection(AbstractMaskDetection):
         if self.input_shape[0] == -1:
             self.input_shape = (1,) + self.input_shape[1:]
 
-        self.rec_model.run(np.zeros(self.input_shape, np.float32))
+        self.rec_model.run(np.zeros(self.input_shape, float))
         logger.info(
             f"Mask detection engine warmup complete! Expecting input shape: {self.input_shape}. Max batch size: {self.max_batch_size}")
 
@@ -328,7 +328,7 @@ class DetectorInfer(AbstractDetectorInfer):
 
         if not self.output_order:
             self.output_order = self.rec_model.out_names
-        self.rec_model.run(np.zeros(self.input_shape, np.float32))
+        self.rec_model.run(np.zeros(self.input_shape, float))
         logger.info(f"Engine warmup complete! Expecting input shape: {self.input_shape}")
 
     def run(self, input=None, from_device=False, infer_shape=None, **kwargs):

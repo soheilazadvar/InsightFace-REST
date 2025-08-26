@@ -57,9 +57,9 @@ class CenterFace(AbstractDetector):
             if self.landmarks:
                 lms[:, 0:10:2], lms[:, 1:10:2] = lms[:, 0:10:2], lms[:, 1:10:2]
         else:
-            dets = np.empty(shape=[0, 5], dtype=np.float32)
+            dets = np.empty(shape=[0, 5], dtype=float)
             if self.landmarks:
-                lms = np.empty(shape=[0, 10], dtype=np.float32)
+                lms = np.empty(shape=[0, 10], dtype=float)
         t1 = time.time()
         logger.debug(f"Postprocess took: {(t1 - t0) * 1000:.3f} ms.")
 
@@ -91,11 +91,11 @@ class CenterFace(AbstractDetector):
                         lm.append(landmark[0, j * 2 + 1, c0[i], c1[i]] * s1 + x1)
                         lm.append(landmark[0, j * 2, c0[i], c1[i]] * s0 + y1)
                     lms.append(lm)
-            boxes = np.asarray(boxes, dtype=np.float32)
+            boxes = np.asarray(boxes, dtype=float)
             keep = nms(boxes, self.nms_threshold)
             boxes = boxes[keep, :]
             if self.landmarks:
-                lms = np.asarray(lms, dtype=np.float32)
+                lms = np.asarray(lms, dtype=float)
                 lms = lms[keep, :]
                 lms = lms.reshape((-1, 5, 2))
         if self.landmarks:

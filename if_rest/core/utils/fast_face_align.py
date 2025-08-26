@@ -17,7 +17,7 @@ arcface_src = np.array([
     [56.0252, 71.7366],
     [41.5493, 92.3655],
     [70.7299, 92.2041]
-], dtype=np.float32)
+], dtype=float)
 
 arcface_src = np.expand_dims(arcface_src, axis=0)
 

@@ -22,7 +22,7 @@ class Arcface(AbstractArcFace):
     # warmup
     def prepare(self, **kwargs):
         logger.info("Warming up ArcFace ONNX Runtime engine...")
-        self.rec_model.run(self.outputs, {self.rec_model.get_inputs()[0].name: [np.zeros((3, 112, 112), np.float32)]})
+        self.rec_model.run(self.outputs, {self.rec_model.get_inputs()[0].name: [np.zeros((3, 112, 112), float)]})
 
     def get_embedding(self, face_img):
         if not isinstance(face_img, list):
@@ -51,7 +51,7 @@ class FaceGenderage(AbstractFaceGenderAge):
     def prepare(self, **kwargs):
         logger.info("Warming up GenderAge ONNX Runtime engine...")
         self.rec_model.run(self.outputs,
-                           {self.rec_model.get_inputs()[0].name: [np.zeros(tuple(self.input.shape[1:]), np.float32)]})
+                           {self.rec_model.get_inputs()[0].name: [np.zeros(tuple(self.input.shape[1:]), float)]})
 
     def get(self, face_img):
         if not isinstance(face_img, list):
@@ -92,7 +92,7 @@ class MaskDetection(AbstractMaskDetection):
     def prepare(self, **kwargs):
         logger.info("Warming up mask detection ONNX Runtime engine...")
         self.rec_model.run(self.outputs,
-                           {self.rec_model.get_inputs()[0].name: [np.zeros(tuple(self.input.shape[1:]), np.float32)]})
+                           {self.rec_model.get_inputs()[0].name: [np.zeros(tuple(self.input.shape[1:]), float)]})
 
     def get(self, face_img):
         if not isinstance(face_img, list):
@@ -124,7 +124,7 @@ class DetectorInfer(AbstractDetectorInfer):
         self.input = self.rec_model.get_inputs()[0]
         self.input_dtype = self.input.type
         if self.input_dtype == 'tensor(float)':
-            self.input_dtype = np.float32
+            self.input_dtype = float
         else:
             self.input_dtype = np.uint8
 

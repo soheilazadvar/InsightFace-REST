@@ -77,10 +77,10 @@ def bx_lm(box, landmark, scores, threshold, xs, ys):
 
 @njit()
 def prepare_image(img):
-    mean = np.array([0.408, 0.447, 0.47], dtype=np.float32)
-    std = np.array([0.289, 0.274, 0.278], dtype=np.float32)
-    img = ((img / 255.0 - mean) / std).astype(np.float32)
-    # img = ((img / 255.0)).astype(np.float32)
+    mean = np.array([0.408, 0.447, 0.47], dtype=float)
+    std = np.array([0.289, 0.274, 0.278], dtype=float)
+    img = ((img / 255.0 - mean) / std).astype(float)
+    # img = ((img / 255.0)).astype(float)
     img = img.transpose((2, 0, 1))
     img = np.expand_dims(img, 0)
 
@@ -132,10 +132,10 @@ class DBFace(AbstractDetector):
         boxes, landmarks = bx_lm(box, landmark, scores, threshold, xs, ys)
 
         # tn0 = time.time()
-        boxes = np.asarray(boxes, dtype=np.float32)
+        boxes = np.asarray(boxes, dtype=float)
         keep = nms(boxes, self.nms_threshold)
         boxes = boxes[keep, :]
-        lms = np.asarray(landmarks, dtype=np.float32)
+        lms = np.asarray(landmarks, dtype=float)
         lms = lms[keep, :]
         # tn1 = time.time()
         # logger.debug(f"NMS took: {tn1 - tn0} ({1 / (tn1 - tn0)} im/sec)")
