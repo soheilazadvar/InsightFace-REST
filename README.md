@@ -1,5 +1,15 @@
 # InsightFace-REST
 
+#### Update (August 2025)
+
+This repository is a fork of the original repository. The main repository has issues that prevent the image from building correctly. Below is a summary of the modifications made:
+
+- Corrected `CRLF` from the end of each line in the `entrypoints.sh` file, which was causing an error.
+- Updated to use `numpy==2.*`.
+- Updated to use `pybind11>=2.12`.
+- Updated to use `onnx>=1.18` and `onnxruntime>=1.18`.
+- Replaced `np.float32` and `np.float`(deprecated) with `float` in the `ifr_rest\core\` directory.
+
 [GitHub Issues](https://github.com/SthPhoenix/InsightFace-REST/issues)
 
 
